@@ -10,6 +10,7 @@ $(function () {
 
   $(".gallery__slider").slick({
     dots: true,
+    infinite: false,
     centerPadding: "60px",
     slidesToShow: 3,
     responsive: [
@@ -66,7 +67,6 @@ $(function () {
     ],
   });
 });
-
 const smoothScroll = () => {
   const menu = document.querySelector(".menu__list");
   const links = menu.querySelectorAll(".menu__list-link");
@@ -124,16 +124,27 @@ const menuActive = () => {
 };
 
 const galleryModal = () => {
-  const galeryImg = document.querySelectorAll(".gallery__slider-item");
+  const galeryImg = document.querySelectorAll(
+    ".gallery__slider-item .gallery__slider-img"
+  );
+  const spanZoom = document.querySelectorAll(".span--active");
   const galeryActive = document.querySelector(".gallery__item-active");
   const body = document.querySelector("body");
   let galeryActiveArr = document.querySelector(".gallery__slider--active");
 
-  galeryImg.forEach((element, index) => {
+  console.dir(galeryImg);
+
+  /* body.addEventListener("click", (e) => {
+    console.log(e.target);
+  }); */
+
+  spanZoom.forEach((element, index) => {
     element.addEventListener("click", (e) => {
-      let cloneElem = element.children[0].cloneNode();
+      console.log(galeryImg.children);
+      let cloneElem = galeryImg[index].cloneNode();
       cloneElem.classList.add("gallery__active-img");
       cloneElem.classList.remove("gallery__slider-img");
+      console.log(cloneElem);
       galeryActiveArr.append(cloneElem);
       galeryActive.style.display = "flex";
     });
@@ -142,9 +153,7 @@ const galleryModal = () => {
   galeryActive.addEventListener("click", (e) => {
     if (!e.target.classList.contains("gallery__active-img")) {
       galeryActive.style.display = "none";
-      console.dir(galeryActiveArr.children[0]);
       galeryActiveArr.children[0].remove();
-      console.log(galeryActiveArr.children);
     }
   });
 };

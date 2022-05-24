@@ -10,7 +10,6 @@ $(function () {
 
   $(".gallery__slider").slick({
     dots: true,
-    centerMode: true,
     centerPadding: "60px",
     slidesToShow: 3,
     responsive: [
@@ -18,7 +17,6 @@ $(function () {
         breakpoint: 1300,
         settings: {
           arrows: false,
-          centerMode: true,
           centerPadding: "40px",
           slidesToShow: 2,
         },
@@ -27,7 +25,6 @@ $(function () {
         breakpoint: 1100,
         settings: {
           arrows: false,
-          centerMode: true,
           centerPadding: "40px",
           slidesToShow: 2,
         },
@@ -37,7 +34,6 @@ $(function () {
         settings: {
           infinite: true,
           arrows: false,
-          centerMode: true,
           centerPadding: "40px",
           slidesToShow: 1,
         },
@@ -46,7 +42,6 @@ $(function () {
         breakpoint: 480,
         settings: {
           arrows: false,
-          centerMode: true,
           centerPadding: "40px",
           slidesToShow: 1,
         },
@@ -128,5 +123,32 @@ const menuActive = () => {
   });
 };
 
+const galleryModal = () => {
+  const galeryImg = document.querySelectorAll(".gallery__slider-item");
+  const galeryActive = document.querySelector(".gallery__item-active");
+  const body = document.querySelector("body");
+  let galeryActiveArr = document.querySelector(".gallery__slider--active");
+
+  galeryImg.forEach((element, index) => {
+    element.addEventListener("click", (e) => {
+      let cloneElem = element.children[0].cloneNode();
+      cloneElem.classList.add("gallery__active-img");
+      cloneElem.classList.remove("gallery__slider-img");
+      galeryActiveArr.append(cloneElem);
+      galeryActive.style.display = "flex";
+    });
+  });
+
+  galeryActive.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("gallery__active-img")) {
+      galeryActive.style.display = "none";
+      console.dir(galeryActiveArr.children[0]);
+      galeryActiveArr.children[0].remove();
+      console.log(galeryActiveArr.children);
+    }
+  });
+};
+
 menuActive();
 smoothScroll();
+galleryModal();
